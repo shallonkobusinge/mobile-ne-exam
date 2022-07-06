@@ -1,0 +1,165 @@
+{
+    "swaggerDefinition": {
+        "info": {
+            "title": "Swagger API",
+            "description": "Swagger API",
+            "version": "1.0.0",
+            "license": {
+                "name": "MIT",
+                "url": "https://opensource.org/licenses/MIT"
+            }
+        },
+        "securityDefinitions": {
+            "bearerAuth": {
+                "type": "apiKey",
+                "name": "authorization",
+                "scheme": "bearer",
+                "in": "header"
+            }
+        },
+        "host": "localhost:5000",
+        "basePath": "/",
+        "schemes": [
+            "http"
+        ],
+        "consumes": [
+            "application/json"
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "tags": [
+            {
+                "name": "Auth",
+                "description": "Auth APIs"
+            },
+            {
+                "name": "User",
+                "description": "User APIs"
+            }
+        ],
+        "paths": {
+            "/api/v1/auth/register": {
+                "post": {
+                    "tags": [
+                        "Auth"
+                    ],
+                    "summary": "Create  User",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "in": "body",
+                            "description": "User object that needs to be added ",
+                            "required": true,
+                            "schema": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    ],
+                    "produces": [
+                        "application/json"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "User added successfully"
+                        },
+                        "400": {
+                            "description": "Invalid user supplied"
+                        }
+                    }
+                }
+            },
+            "/api/v1/auth/login": {
+                "post": {
+                    "tags": [
+                        "Auth"
+                    ],
+                    "summary": "Login of the user",
+                    "parameters": [
+                        {
+                            "name": "username",
+                            "in": "body",
+                            "description": "Adding user to login",
+                            "schema": {
+                                "$ref": "#/definitions/Login"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "201": {
+                            "description": "User Logged in successfully"
+                        },
+                        "400": {
+                            "description": "Bad request"
+                        },
+                        "500": {
+                            "description": "Internal Server Error"
+                        }
+                    }
+                }
+            },
+            "/api/v1/users": {
+                "get": {
+                    "tags": [
+                        "User"
+                    ],
+                    "summary": "Get all users",
+                    "security": [
+                        {
+                            "bearerAuth": []
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "All users"
+                        }
+                    }
+                }
+            }
+        },
+        "definitions": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "description": "Phone number of the user"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Password of the user"
+                    },
+                    "nationalId": {
+                        "type": "string",
+                        "description": "nationalId of the user"
+                    },
+                    "fname": {
+                        "type": "string",
+                        "description": "Firstname of the user"
+                    },
+                    "lname": {
+                        "type": "string",
+                        "description": "Lastname of the user"
+                    },
+                    "address": {
+                        "type": "string",
+                        "description": "Address of the user"
+                    }
+                }
+            },
+            "Login": {
+                "properties": {
+                    "iDOrPhone": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "apis": [
+        "./src/routes/*"
+    ]
+}

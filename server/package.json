@@ -4,5 +4,23 @@
   "description": "server for the mobile development",
   "main": "index.js",
   "author": "Shallon Kobusinge",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parse": "^0.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "joi-objectid": "^4.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.3",
+    "mongoose-deep-populate": "^3.2.0",
+    "mongoose-paginate-v2": "^1.6.3",
+    "swagger-jsdoc": "5.0.1",
+    "swagger-ui-express": "4.1.4"
+  }
 }
