@@ -1,0 +1,8 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server for the mobile development",
+  "main": "index.js",
+  "author": "Shallon Kobusinge",
+  "license": "MIT"
+}
