@@ -5,7 +5,6 @@ import Navbar from '../components/Navbar';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
 import { useEffect } from 'react';
 
 async function storeToken(user) {
@@ -46,7 +45,7 @@ export default function Login({ navigation }) {
                 Alert.alert("Login", "User logged in successfully");
                 setTimeout(() => { navigation.navigate("Home") }, 300)
             }).catch((error) => {
-                toast.error("Couldn't log in'")
+                Alert.alert("Login", error.response.data.message.details[0].message || "Couldn't login");
             })
     }
     return (

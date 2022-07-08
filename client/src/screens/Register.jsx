@@ -24,7 +24,7 @@ export default function Register({ navigation }) {
 
             })
             .catch((error) => {
-
+                Alert.alert("Signup", error.response.data.message.details[0].message || "Couldn't signup");
             })
     }
 
