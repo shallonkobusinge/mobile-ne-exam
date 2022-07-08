@@ -52,7 +52,7 @@ export default function Login({ navigation }) {
                     )
                 }, 300)
             }).catch((error) => {
-                Alert.alert("Login", error.response.data.message.details[0].message || "Couldn't login");
+                Alert.alert("Login", error.response.data.message || "Couldn't login");
             })
     }
     return (
