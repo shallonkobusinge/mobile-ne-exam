@@ -4,7 +4,8 @@ import Navbar from '../components/Navbar'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
-export default function Home({ navigation }) {
+export default function Home({ route, navigation }) {
+
     const handleLogout = () => {
         AsyncStorage.removeItem("token")
         Alert.alert("Logout", "User logged out successfully")

@@ -17,7 +17,7 @@ export default function Register({ navigation }) {
     }
 
     const handleSubmit = () => {
-        axios.post("http://192.168.0.11:5000/api/v1/users/add", formData)
+        axios.post("http://192.168.1.129:5000/api/v1/users/add", formData)
             .then(response => {
                 Alert.alert("Signup", "User added successfully");
                 setTimeout(() => { navigation.navigate("Login") }, 300)

@@ -38,12 +38,19 @@ export default function Login({ navigation }) {
 
 
     const handleSubmit = async () => {
-        await axios.post("http://192.168.0.11:5000/api/v1/users/login", formData)
+        await axios.post("http://192.168.1.129:5000/api/v1/users/login", formData)
             .then((response) => {
                 setLoginSuccess(true);
                 setToken(response.data.token);
+                console.log("response ", response.data);
                 Alert.alert("Login", "User logged in successfully");
-                setTimeout(() => { navigation.navigate("Home") }, 300)
+                setTimeout(() => {
+                    navigation.navigate("Home"
+                        // , {
+                        //     user: response.data.data,
+                        // }
+                    )
+                }, 300)
             }).catch((error) => {
                 Alert.alert("Login", error.response.data.message.details[0].message || "Couldn't login");
             })
