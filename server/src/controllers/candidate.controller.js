@@ -14,14 +14,15 @@ exports.vote = async (req, res) => {
     if (!candidate) return res.status(404).json({ success: false, message: "candidate does not exist" });
     const UserToVote = await User.findOne({ userId: req.body.user });
     if (!UserToVote) return res.status(404).json({ success: false, message: "User does not exist" });
-    const UserToVoteSecondTime = await Candidate.findOne({
-        $and: [
-            { user: req.body.user },
-            { _id: req.params.id }
-        ]
+    const UserToVoteSecondTime = await Candidate.findOne({ user: req.body.user })
+    // const UserToVoteSecondTime = await Candidate.findOne({
+    //     $and: [
+    //         { user: req.body.user },
+    //         { _id: req.params.id }
+    //     ]
 
-    })
-    if (UserToVoteSecondTime) return res.status(404).json({ success: false, message: `You have voted ${candidate.fname} ${candidate.lname} already` });
+    // })
+    if (UserToVoteSecondTime) return res.status(404).json({ success: false, message: "You are allowed to vote only one candidate" });
 
     candidate.user = req.body.user;
     candidate.votes += 1;

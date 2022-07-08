@@ -5,7 +5,7 @@ export default function Navbar({ children }) {
     return (
         <View style={styles.container}>
             <View style={styles.navbar}>
-                <Text style={styles.logo}>VS</Text>
+                <Text style={styles.logo}>Voting System</Text>
 
             </View>
             <View style={styles.main}>
