@@ -6,7 +6,62 @@ import Button from '../components/Button'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Select from "../components/Select"
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
+const takeAndUploadPhotoAsync = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+    });
+
+    if (result.cancelled) {
+        return;
+    }
+    let localUri = result.uri;
+    let filename = localUri.split('/').pop();
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+    console.log("filename ", filename, "type", type);
+
+    const data = new FormData();
+    data.append('name', 'avatar');
+    data.append('fileData',
+        {
+            uri: localUri,
+            name: filename,
+            type
+        }
+    );
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+        alert("Permission to access camera roll is required!");
+        return;
+    }
+    // const uploadResult = await FileSystem.uploadAsync('http://192.168.8.117:5000/upload', data, {
+    //     httpMethod: 'POST',
+    //     uploadType: FileSystemUploadType.MULTIPART,
+    //     fiedlName: 'fileData',
+    // });
+    // console.log("result ", uploadResult);
+    //upload an image to the server on http://192.168.8.117:5000/upload
+
+    await axios.post('http://192.168.8.117:5000/upload', data, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+        },
+    })
+        .then((response) => {
+            console.log("response ", response);
+            Alert.alert("Image Upload", "Image Upload Successfully")
+        }).catch((error) => {
+            console.log("error ", error)
+        })
+
+
+
+};
 export default function RegisterCandidate({ navigation }) {
     const [formData, setFormData] = useState({});
 
@@ -93,6 +148,11 @@ export default function RegisterCandidate({ navigation }) {
                         InputHandler={handleInput}
 
                     />
+                    <View style={{ flex: 1 }}>
+                        <TouchableOpacity style={{ marginTop: 80 }} onPress={takeAndUploadPhotoAsync}>
+                            <Text>Upload Image</Text>
+                        </TouchableOpacity>
+                    </View>
                     <Button
                         SubmitData={handleSubmit}
                         title="Submit"

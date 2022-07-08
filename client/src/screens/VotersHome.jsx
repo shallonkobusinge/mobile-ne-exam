@@ -19,7 +19,7 @@ export default function VotersHome({ route, navigation }) {
 
             >
                 <Image
-                    source={require("../../assets/images/avatar.jpg")}
+                    source={require("../../assets/images/poll.jpg")}
                     style={styles.image}
                     resizeMode='contain'
                 />
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     image: {
         marginTop: 30,
         height: "45%",
-        width: "80%",
+        width: "45%",
         borderRadius: 100
     },
     selectionText: {

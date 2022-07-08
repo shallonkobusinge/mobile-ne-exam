@@ -32,6 +32,8 @@ exports.vote = async (req, res) => {
 //register candidate
 exports.registerCandidate = async (req, res) => {
     console.log("body ", req.body);
+
+
     const { error } = validateCandidate(req.body);
     if (error) return res.status(400).send(ERROR_RESPONSE(null, error.details[0].message, 400));
     //find candidate by national Id 

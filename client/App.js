@@ -8,7 +8,7 @@ import Register from './src/screens/Register';
 import VotersHome from './src/screens/VotersHome';
 import RegisterCandidate from './src/screens/RegisterCandidates';
 import Vote from './src/screens/Vote'
-import tw from 'twrnc';
+import UploadImageComp from './src/screens/Upload';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +18,15 @@ export default function App() {
     <NavigationContainer
     >
       <Stack.Navigator>
+        {/* <Stack.Screen
+          name="Upload"
+          component={UploadImageComp}
+          options={{
+            title: "Upload",
+            headerShown: false
+          }}
+        /> */}
+
         <Stack.Screen
           name="Register"
           component={Register}
