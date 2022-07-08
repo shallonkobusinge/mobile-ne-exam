@@ -10,6 +10,7 @@ const candidateSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+
     fname: {
         type: String,
         required: true,

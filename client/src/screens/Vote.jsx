@@ -1,4 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native'
+import UserAvatar from 'react-native-user-avatar';
+import { Avatar } from 'react-native-elements';
 import React, { useState } from 'react'
 import axios from 'axios';
 import authHeader from '../utils/auth.header';
@@ -85,14 +87,16 @@ export default function Vote({ route, navigation }) {
                                 </View>
                                 <View style={styles.main}>
                                     <Text style={styles.userText}>Picture</Text>
-                                    <Text style={styles.userTextValue}></Text>
+                                    <Text style={styles.userTextValue}>
+                                        <Avatar rounded size={30} title={`${candidate?.fname[0]} ${candidate?.lname[0]}`} overlayContainerStyle={{ backgroundColor: '#496CE8' }} />
+                                    </Text>
                                 </View>
                                 {(route?.params?.displayVote) &&
 
 
 
                                     <>
-                                        <View style={styles.main}>
+                                        <View style={styles.voteMain}>
 
                                             <TouchableOpacity
                                                 onPress={() => { voteCandidate(candidate?._id) }}
@@ -144,17 +148,24 @@ const styles = StyleSheet.create({
         paddingTop: 8,
         backgroundColor: "white",
         marginTop: 10,
-        height: 150,
+        height: 200,
         width: 370,
         paddingTop: 20,
         textAlign: 'left',
         elevation: 20,
-        borderRadius: 10
+        borderRadius: 10,
+        marginBottom: 20
     },
     main: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: "space-around",
+    },
+    voteMain: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: "space-around",
+        marginTop: 10
     },
     userText: {
         textAlign: 'center'
