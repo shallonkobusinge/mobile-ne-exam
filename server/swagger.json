@@ -36,20 +36,23 @@
             {
                 "name": "User",
                 "description": "User APIs"
+            },
+            {
+                "name": "Candidate"
             }
         ],
         "paths": {
-            "/api/v1/auth/register": {
+            "/api/v1/auth/nec/register": {
                 "post": {
                     "tags": [
                         "Auth"
                     ],
-                    "summary": "Create  User",
+                    "summary": "Create  NEC Member user",
                     "parameters": [
                         {
-                            "name": "user",
+                            "name": "nec user",
                             "in": "body",
-                            "description": "User object that needs to be added ",
+                            "description": "NEC member object that needs to be added ",
                             "required": true,
                             "schema": {
                                 "$ref": "#/definitions/User"
@@ -65,6 +68,36 @@
                         },
                         "400": {
                             "description": "Invalid user supplied"
+                        }
+                    }
+                }
+            },
+            "/api/v1/auth/voter/register": {
+                "post": {
+                    "tags": [
+                        "Auth"
+                    ],
+                    "summary": "Create  Voter",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "in": "body",
+                            "description": "Voter object that needs to be added ",
+                            "required": true,
+                            "schema": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    ],
+                    "produces": [
+                        "application/json"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Voter added successfully"
+                        },
+                        "400": {
+                            "description": "Invalid voter supplied"
                         }
                     }
                 }
@@ -98,10 +131,10 @@
                     }
                 }
             },
-            "/api/v1/users": {
+            "/api/v1/candidates": {
                 "get": {
                     "tags": [
-                        "User"
+                        "Candidate"
                     ],
                     "summary": "Get all users",
                     "security": [
@@ -144,12 +177,41 @@
                     "address": {
                         "type": "string",
                         "description": "Address of the user"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Email of the user"
+                    }
+                }
+            },
+            "Candidate": {
+                "type": "object",
+                "properties": {
+                    "fname": {
+                        "type": "string",
+                        "description": "Firstname of the candidate"
+                    },
+                    "lname": {
+                        "type": "string",
+                        "description": "Lastname of the candidate"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "description": "Gender of the candidate"
+                    },
+                    "missionStatement": {
+                        "type": "string",
+                        "description": "Mission Statement of the candidate"
+                    },
+                    "profilePicture": {
+                        "type": "string",
+                        "description": "Profile picture Statement of the candidate"
                     }
                 }
             },
             "Login": {
                 "properties": {
-                    "iDOrPhone": {
+                    "iDOrPhoneOrEmail": {
                         "type": "string"
                     },
                     "password": {

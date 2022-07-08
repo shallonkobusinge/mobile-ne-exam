@@ -21,7 +21,7 @@ app.use(cors());
 
 app.set('port', port);
 require('./src/routes/auth.router')(app);
-require('./src/routes/user.router')(app);
+require('./src/routes/candidate.router')(app);
 
 
 mongoose.connect(process.env.DB_URL, {

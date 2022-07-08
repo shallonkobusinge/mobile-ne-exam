@@ -4,10 +4,16 @@ import Navbar from '../components/Navbar'
 import Input from '../components/Input'
 import Button from '../components/Button'
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Select from "../components/Select"
 
-export default function Register({ navigation }) {
+export default function RegisterCandidate({ navigation }) {
     const [formData, setFormData] = useState({});
 
+    const genderOptions = [
+        { value: "FEMALE", label: "FEMALE" },
+        { value: "MALE", label: "MALE" }
+    ]
 
     const handleInput = (name, value) => {
         setFormData({
@@ -15,17 +21,30 @@ export default function Register({ navigation }) {
             [name]: value
         })
     }
+    const SelectHandler = (name, value) => {
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+    }
 
-    const handleSubmit = () => {
-        axios.post("http://192.168.8.117:5000/api/v1/auth/voter/register", formData)
+    const handleSubmit = async () => {
+        const token = await AsyncStorage.getItem("token")
+        const auth = token.split('"').join('')
+        axios.post("http://192.168.8.117:5000/api/v1/candidate/register", formData, {
+            headers: {
+                'authorization': `${auth}`
+            }
+        })
             .then(response => {
-
-                Alert.alert("Signup", "User added successfully");
-                setTimeout(() => { navigation.navigate("Login") }, 300)
+                console.log(response.data);
+                Alert.alert("Candidate", "Candidate added successfully");
+                setTimeout(() => { navigation.navigate("NecHome") }, 300)
 
             })
             .catch((error) => {
-                Alert.alert("Signup", error.response.data.data || "Couldn't signup");
+                console.log("error ", error.response.data);
+                Alert.alert("Signup", error.response.data.message || "Couldn't register");
             })
     }
 
@@ -37,7 +56,7 @@ export default function Register({ navigation }) {
                 showsHorizontalScrollIndicator={false}
             >
 
-                <Text style={styles.heading}>Register</Text>
+                <Text style={styles.heading}>Add Candidate</Text>
                 <View>
 
                     <Input
@@ -53,50 +72,33 @@ export default function Register({ navigation }) {
 
                     />
                     <Input
-                        label="Email"
-                        name="email"
-                        InputHandler={handleInput}
-
-                    />
-                    <Input
-                        label="Phone"
-                        name="phone"
-                        InputHandler={handleInput}
-
-                    />
-                    <Input
-                        label="National Id"
+                        label="National ID"
                         name="nationalId"
                         InputHandler={handleInput}
 
                     />
+                    <View style={styles.select}>
+                        <Select
+                            options={genderOptions}
+                            SelectHandler={SelectHandler}
+                            name="gender"
+                            label="Select the gender"
+
+                        />
+                    </View>
+
                     <Input
-                        label="Address"
-                        name="address"
+                        label="Mission Statement"
+                        name="missionStatement"
                         InputHandler={handleInput}
 
                     />
-                    <Input
-                        label="Password"
-                        name="password"
-                        InputHandler={handleInput}
-
-                    />
-
                     <Button
                         SubmitData={handleSubmit}
                         title="Submit"
                     />
 
-                    <View style={styles.redirect}>
-                        <TouchableOpacity
-                            onPress={() => { navigation.navigate("Login") }}
-                            style={styles.touchable}
-                        >
-                            <Text>Already have an account ?  </Text>
-                            <Text style={styles.registerText}>Login</Text>
-                        </TouchableOpacity>
-                    </View>
+
                 </View>
             </ScrollView>
         </Navbar>
@@ -128,6 +130,9 @@ const styles = StyleSheet.create({
     },
     registerText: {
         color: "#496CE8"
-    }
+    },
+    select: {
+        marginTop: 30
+    },
 
 })

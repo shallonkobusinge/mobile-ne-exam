@@ -18,6 +18,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    email: {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
     },
@@ -45,6 +49,9 @@ exports.User = mongoose.model("User", UserSchema);
 
 //validate nationalId to be 16 digits using regex
 
+
+
+
 //validate user,validate phone to be unique and 10 digits using regex
 exports.validateUser = (user) => {
     const schema = Joi.object({
@@ -52,26 +59,19 @@ exports.validateUser = (user) => {
         lname: Joi.string().required(),
         nationalId: Joi.string().regex(/^[0-9]{16}$/).required(),
         password: Joi.string(),
+        email: Joi.string().email().required(),
         phone: Joi.string().regex(/^[0-9]{10}$/).required(),
         address: Joi.string().required(),
     });
     return schema.validate(user);
 }
+//validate if the email is unique and a valide email
 
-exports.validateOwner = (user) => {
-    const schema = Joi.object({
-        fname: Joi.string().required(),
-        lname: Joi.string().required(),
-        nationalId: Joi.string().regex(/^[0-9]{16}$/).required(),
-        phone: Joi.string().regex(/^[0-9]{10}$/).required(),
-        address: Joi.string().required(),
-    });
-    return schema.validate(user);
-}
+
 // validate login
 exports.validateLogin = (login) => {
     const schema = Joi.object({
-        iDOrPhone: Joi.string().required(),
+        iDOrPhoneOrEmail: Joi.string().required(),
         password: Joi.string().required(),
     });
     return schema.validate(login);
@@ -84,6 +84,7 @@ exports.generateToken = async (user) => {
         lastName: user.lname,
         nationalId: user.nationalId,
         isAdmin: user.isAdmin,
+        email: user.email,
         phone: user.phone,
     },
         process.env.JWT_SECRET_KEY,

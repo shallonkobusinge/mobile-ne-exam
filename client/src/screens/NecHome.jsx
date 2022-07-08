@@ -31,21 +31,25 @@ export default function Home({ route, navigation }) {
 
                 <TouchableOpacity
                     style={styles.selectionText}
-                    onPress={() => { navigation.navigate("ViewEmployees") }}
+                    onPress={() => {
+                        navigation.navigate("Vote", {
+                            displayVote: false
+                        })
+                    }}
                 >
                     <Text
                         style={styles.employeesText}
-                    >View Employees</Text>
+                    >View All Candidates</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={styles.selectionText}
 
-                    onPress={() => { navigation.navigate("RegisterEmployee") }}
+                    onPress={() => { navigation.navigate("RegisterCandidates") }}
                 >
                     <Text
                         style={styles.employeesText}
-                    >Add Employee</Text>
+                    >Add Candidate</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity

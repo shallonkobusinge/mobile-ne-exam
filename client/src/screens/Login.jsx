@@ -38,20 +38,33 @@ export default function Login({ navigation }) {
 
 
     const handleSubmit = async () => {
-        await axios.post("http://192.168.1.129:5000/api/v1/users/login", formData)
+        await axios.post("http://192.168.8.117:5000/api/v1/auth/login", formData)
             .then((response) => {
-                setLoginSuccess(true);
-                setToken(response.data.token);
-                console.log("response ", response.data);
-                Alert.alert("Login", "User logged in successfully");
-                setTimeout(() => {
-                    navigation.navigate("Home"
-                        // , {
-                        //     user: response.data.data,
-                        // }
-                    )
-                }, 300)
+
+                if (response?.data?.data?.isAdmin) {
+                    setLoginSuccess(true);
+                    setToken(response.data.token);
+                    Alert.alert("Login", " logged in successfully");
+                    setTimeout(() => {
+                        navigation.navigate("NecHome")
+                    }, 300)
+                } else {
+                    console.log(response.data.data);
+                    Alert.alert("Login", " logged in successfully");
+                    setTimeout(() => {
+                        setLoginSuccess(true);
+                        setToken(response.data.token);
+                        navigation.navigate("VotersHome", {
+                            user: response.data.data
+                        })
+                    }, 300)
+                }
+
+
+
+
             }).catch((error) => {
+                console.log("error ", error.response);
                 Alert.alert("Login", error.response.data.message || "Couldn't login");
             })
     }
@@ -62,8 +75,8 @@ export default function Login({ navigation }) {
                 <View>
 
                     <Input
-                        label="Email/Username/Phone"
-                        name="emailOrUsernameOrPhone"
+                        label="Id/Phone/Email"
+                        name="iDOrPhoneOrEmail"
                         InputHandler={handleInput}
 
                     />
