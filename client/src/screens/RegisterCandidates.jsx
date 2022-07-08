@@ -38,13 +38,6 @@ const takeAndUploadPhotoAsync = async () => {
         alert("Permission to access camera roll is required!");
         return;
     }
-    // const uploadResult = await FileSystem.uploadAsync('http://192.168.8.117:5000/upload', data, {
-    //     httpMethod: 'POST',
-    //     uploadType: FileSystemUploadType.MULTIPART,
-    //     fiedlName: 'fileData',
-    // });
-    // console.log("result ", uploadResult);
-    //upload an image to the server on http://192.168.8.117:5000/upload
 
     await axios.post('http://192.168.8.117:5000/upload', data, {
         headers: {
@@ -58,7 +51,6 @@ const takeAndUploadPhotoAsync = async () => {
         }).catch((error) => {
             console.log("error ", error)
         })
-
 
 
 };
